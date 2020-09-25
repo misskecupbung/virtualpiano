@@ -1,0 +1,18 @@
+language: minimal
+
+services:
+  - docker
+sudo: required
+
+before_install:
+- docker pull nginx:alpine
+
+script:
+  - docker build -t virtualpiano .
+
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker tag front $DOCKER_USER/virtualpiano:$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_USER/virtualpiano:$TRAVIS_BUILD_NUMBER
+  - docker tag front $DOCKER_USER/virtualpiano:latest
+  - docker push $DOCKER_USER/virtualpiano:latest
