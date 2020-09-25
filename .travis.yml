@@ -2,10 +2,11 @@ language: minimal
 
 services:
   - docker
+
 sudo: required
 
 before_install:
-- docker pull nginx:alpine
+  - docker pull nginx:alpine
 
 script:
   - docker build -t virtualpiano .
